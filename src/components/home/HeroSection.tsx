@@ -22,7 +22,7 @@ const HeroSection = () => {
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-background/10 backdrop-blur-sm border border-background/20 mb-6">
             <Star className="w-4 h-4 text-accent fill-accent" />
             <span className="text-sm font-medium text-background">
-              Nota 4.9 com mais de 200 avaliacoes
+              Nota 4.9 - Clientes satisfeitos
             </span>
           </div>
 
@@ -31,8 +31,8 @@ const HeroSection = () => {
           </h1>
 
           <p className="text-lg md:text-xl text-background/90 mb-8 leading-relaxed">
-            Passeios diarios e hospedagem com toda a atencao que seu melhor amigo merece. 
-            Servico personalizado e seguro na regiao de Sao Paulo.
+            Passeios diarios e visitas com toda a atencao que seu melhor amigo merece. 
+            Servico personalizado e seguro na Grande Florianopolis.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 mb-12">
@@ -56,7 +56,7 @@ const HeroSection = () => {
             </div>
             <div className="flex items-center gap-2 text-background/80">
               <Star className="w-5 h-5" />
-              <span className="text-sm font-medium">5 anos de experiencia</span>
+              <span className="text-sm font-medium">+10 anos de experiencia</span>
             </div>
           </div>
         </div>

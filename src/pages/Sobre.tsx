@@ -7,9 +7,7 @@ import petSitterImage from "@/assets/pet-sitter-home.jpg";
 
 const Sobre = () => {
   const stats = [
-    { value: "5+", label: "Anos de experiencia" },
-    { value: "500+", label: "Passeios realizados" },
-    { value: "150+", label: "Pets atendidos" },
+    { value: "10+", label: "Anos de experiencia" },
     { value: "4.9", label: "Nota media" },
   ];
 
@@ -50,7 +48,7 @@ const Sobre = () => {
                   Cuidando de pets com amor e dedicacao
                 </h1>
                 <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
-                  Ola! Sou apaixonada por animais desde sempre. Ha mais de 5 anos, 
+                  Ola! Sou a Lana, apaixonada por animais desde sempre. Ha mais de 10 anos, 
                   transformei essa paixao em profissao, oferecendo servicos de dog walker 
                   e pet sitter para tutores que buscam cuidado de qualidade para seus pets.
                 </p>
@@ -129,10 +127,10 @@ const Sobre = () => {
                 Area de atendimento
               </h2>
               <p className="text-lg text-muted-foreground mb-6">
-                Atendo a regiao central e zona oeste de Sao Paulo, incluindo os bairros:
+                Atendo a Grande Florianopolis, incluindo:
               </p>
               <div className="flex flex-wrap justify-center gap-3">
-                {["Pinheiros", "Vila Madalena", "Perdizes", "Pompeia", "Lapa", "Alto de Pinheiros", "Sumare", "Pacaembu"].map((bairro) => (
+                {["Florianopolis", "Sao Jose", "Palhoca", "Biguacu", "Santo Amaro da Imperatriz"].map((bairro) => (
                   <span key={bairro} className="px-4 py-2 bg-background rounded-full text-foreground font-medium">
                     {bairro}
                   </span>
