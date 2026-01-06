@@ -17,6 +17,15 @@ import NovoPedido from "./pages/NovoPedido";
 import MeusPedidos from "./pages/MeusPedidos";
 import NotFound from "./pages/NotFound";
 
+// Admin pages
+import AdminLayout from "./pages/admin/AdminLayout";
+import AdminDashboard from "./pages/admin/AdminDashboard";
+import AdminPedidos from "./pages/admin/AdminPedidos";
+import AdminAgenda from "./pages/admin/AdminAgenda";
+import AdminPrecos from "./pages/admin/AdminPrecos";
+import AdminAvaliacoes from "./pages/admin/AdminAvaliacoes";
+import AdminConfiguracoes from "./pages/admin/AdminConfiguracoes";
+
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -38,6 +47,17 @@ const App = () => (
             <Route path="/agenda" element={<Agenda />} />
             <Route path="/novo-pedido" element={<NovoPedido />} />
             <Route path="/meus-pedidos" element={<MeusPedidos />} />
+            
+            {/* Admin Routes */}
+            <Route path="/admin" element={<AdminLayout />}>
+              <Route index element={<AdminDashboard />} />
+              <Route path="pedidos" element={<AdminPedidos />} />
+              <Route path="agenda" element={<AdminAgenda />} />
+              <Route path="precos" element={<AdminPrecos />} />
+              <Route path="avaliacoes" element={<AdminAvaliacoes />} />
+              <Route path="configuracoes" element={<AdminConfiguracoes />} />
+            </Route>
+            
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
