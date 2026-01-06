@@ -1,7 +1,10 @@
 import { Link } from "react-router-dom";
 import { Dog, Mail, Phone, MapPin } from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
 
 const Footer = () => {
+  const { user } = useAuth();
+
   return (
     <footer className="bg-foreground text-background">
       <div className="container-section py-12 md:py-16">
@@ -12,11 +15,11 @@ const Footer = () => {
               <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center">
                 <Dog className="w-6 h-6 text-primary-foreground" />
               </div>
-              <span className="text-xl font-bold">PetCare</span>
+              <span className="text-xl font-bold">Lana Pet Care</span>
             </div>
             <p className="text-background/70 text-sm leading-relaxed">
               Cuidado profissional e carinhoso para seu melhor amigo. 
-              Passeios e hospedagem com toda a atencao que seu pet merece.
+              Passeios e visitas com toda a atencao que seu pet merece.
             </p>
           </div>
 
@@ -46,7 +49,6 @@ const Footer = () => {
               <span className="text-sm text-background/70">Dog Walker</span>
               <span className="text-sm text-background/70">Pet Sitter</span>
               <span className="text-sm text-background/70">Visitas</span>
-              <span className="text-sm text-background/70">Pernoite</span>
             </nav>
           </div>
 
@@ -54,17 +56,24 @@ const Footer = () => {
           <div className="space-y-4">
             <h4 className="font-semibold text-base">Contato</h4>
             <div className="flex flex-col gap-3">
-              <a href="mailto:contato@petcare.com" className="flex items-center gap-2 text-sm text-background/70 hover:text-background transition-colors">
+              <a href="mailto:contato@lanapetcare.com.br" className="flex items-center gap-2 text-sm text-background/70 hover:text-background transition-colors">
                 <Mail className="w-4 h-4" />
-                contato@petcare.com
+                contato@lanapetcare.com.br
               </a>
-              <a href="tel:+5511999999999" className="flex items-center gap-2 text-sm text-background/70 hover:text-background transition-colors">
-                <Phone className="w-4 h-4" />
-                (11) 99999-9999
-              </a>
+              {user ? (
+                <a href="https://wa.me/5548999999999" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm text-background/70 hover:text-background transition-colors">
+                  <Phone className="w-4 h-4" />
+                  (48) 99999-9999
+                </a>
+              ) : (
+                <span className="flex items-center gap-2 text-sm text-background/70">
+                  <Phone className="w-4 h-4" />
+                  <Link to="/cadastro" className="underline hover:text-background">Cadastre-se para ver</Link>
+                </span>
+              )}
               <span className="flex items-center gap-2 text-sm text-background/70">
                 <MapPin className="w-4 h-4" />
-                Sao Paulo, SP
+                Grande Florianopolis, SC
               </span>
             </div>
           </div>
@@ -73,7 +82,7 @@ const Footer = () => {
         <div className="mt-12 pt-8 border-t border-background/20">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <p className="text-sm text-background/60">
-              2024 PetCare. Todos os direitos reservados.
+              2024 Lana Pet Care. Todos os direitos reservados.
             </p>
             <div className="flex gap-6">
               <Link to="/politicas" className="text-sm text-background/60 hover:text-background transition-colors">

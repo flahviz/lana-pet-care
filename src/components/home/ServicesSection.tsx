@@ -17,8 +17,8 @@ const services = [
     id: "pet-sitter",
     title: "Pet Sitter",
     description:
-      "Cuidados em casa enquanto voce viaja ou trabalha. Visitas, hospedagem diurna ou pernoite com todo conforto.",
-    features: ["Visitas de 1h ou 2h", "Hospedagem com pernoite", "Alimentacao e medicacao"],
+      "Visitas na sua casa para cuidar do seu pet enquanto voce viaja ou trabalha. Carinho e atencao garantidos.",
+    features: ["Visitas de 1h ou 2h", "Alimentacao e medicacao", "Fotos e atualizacoes"],
     image: petSitterImage,
   },
 ];

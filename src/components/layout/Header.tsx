@@ -44,7 +44,7 @@ const Header = () => {
             <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center">
               <Dog className="w-6 h-6 text-primary-foreground" />
             </div>
-            <span className="text-xl font-bold text-foreground">PetCare</span>
+            <span className="text-xl font-bold text-foreground">Lana Pet Care</span>
           </Link>
 
           {/* Desktop Navigation */}

@@ -49,7 +49,7 @@ const TestimonialsPreview = () => {
               </div>
               <span className="text-lg font-semibold text-foreground">4.9</span>
               <span className="text-muted-foreground">
-                de 200+ avaliacoes
+                nota media
               </span>
             </div>
           </div>
