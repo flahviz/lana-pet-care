@@ -1,27 +1,46 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, Dog } from "lucide-react";
+import { Menu, X, Dog, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@/contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
+  const { user, signOut } = useAuth();
+  const navigate = useNavigate();
 
-  const navLinks = [
+  const publicNavLinks = [
     { href: "/", label: "Inicio" },
     { href: "/avaliacoes", label: "Avaliacoes" },
     { href: "/sobre", label: "Sobre" },
     { href: "/ajuda", label: "Ajuda" },
   ];
 
+  const authNavLinks = [
+    { href: "/dashboard", label: "Painel" },
+    { href: "/meus-pets", label: "Meus Pets" },
+    { href: "/novo-pedido", label: "Agendar" },
+    { href: "/meus-pedidos", label: "Pedidos" },
+  ];
+
+  const navLinks = user ? authNavLinks : publicNavLinks;
+
   const isActive = (path: string) => location.pathname === path;
+
+  const handleSignOut = async () => {
+    await signOut();
+    navigate("/");
+    setIsMenuOpen(false);
+  };
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border">
       <div className="container-section">
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2">
+          <Link to={user ? "/dashboard" : "/"} className="flex items-center gap-2">
             <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center">
               <Dog className="w-6 h-6 text-primary-foreground" />
             </div>
@@ -45,12 +64,26 @@ const Header = () => {
 
           {/* Desktop CTA */}
           <div className="hidden md:flex items-center gap-3">
-            <Button variant="ghost" asChild>
-              <Link to="/login">Entrar</Link>
-            </Button>
-            <Button variant="default" asChild>
-              <Link to="/cadastro">Criar conta</Link>
-            </Button>
+            {user ? (
+              <>
+                <span className="text-sm text-muted-foreground">
+                  {user.user_metadata?.full_name?.split(" ")[0] || user.email}
+                </span>
+                <Button variant="ghost" size="sm" onClick={handleSignOut}>
+                  <LogOut className="w-4 h-4 mr-2" />
+                  Sair
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button variant="ghost" asChild>
+                  <Link to="/login">Entrar</Link>
+                </Button>
+                <Button variant="default" asChild>
+                  <Link to="/cadastro">Criar conta</Link>
+                </Button>
+              </>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -82,16 +115,25 @@ const Header = () => {
                 </Link>
               ))}
               <div className="flex flex-col gap-2 mt-4 px-4">
-                <Button variant="outline" className="w-full" asChild>
-                  <Link to="/login" onClick={() => setIsMenuOpen(false)}>
-                    Entrar
-                  </Link>
-                </Button>
-                <Button variant="default" className="w-full" asChild>
-                  <Link to="/cadastro" onClick={() => setIsMenuOpen(false)}>
-                    Criar conta
-                  </Link>
-                </Button>
+                {user ? (
+                  <Button variant="outline" className="w-full" onClick={handleSignOut}>
+                    <LogOut className="w-4 h-4 mr-2" />
+                    Sair
+                  </Button>
+                ) : (
+                  <>
+                    <Button variant="outline" className="w-full" asChild>
+                      <Link to="/login" onClick={() => setIsMenuOpen(false)}>
+                        Entrar
+                      </Link>
+                    </Button>
+                    <Button variant="default" className="w-full" asChild>
+                      <Link to="/cadastro" onClick={() => setIsMenuOpen(false)}>
+                        Criar conta
+                      </Link>
+                    </Button>
+                  </>
+                )}
               </div>
             </nav>
           </div>

@@ -1,19 +1,46 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { Button } from "@/components/ui/button";
-import { Eye, EyeOff, Mail, Lock, User, Phone, ArrowRight } from "lucide-react";
+import { Eye, EyeOff, Mail, Lock, ArrowRight } from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
+import { toast } from "sonner";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const { signIn } = useAuth();
+  const navigate = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (!email || !password) {
+      toast.error("Por favor, preencha todos os campos");
+      return;
+    }
+
     setIsLoading(true);
-    // Simular login - sera implementado com backend
-    setTimeout(() => setIsLoading(false), 1000);
+    
+    const { error } = await signIn(email, password);
+    
+    if (error) {
+      if (error.message.includes("Invalid login credentials")) {
+        toast.error("Email ou senha incorretos");
+      } else if (error.message.includes("Email not confirmed")) {
+        toast.error("Por favor, confirme seu email antes de entrar");
+      } else {
+        toast.error("Erro ao fazer login. Tente novamente.");
+      }
+      setIsLoading(false);
+      return;
+    }
+
+    toast.success("Login realizado com sucesso!");
+    navigate("/dashboard");
   };
 
   return (
@@ -44,6 +71,8 @@ const Login = () => {
                     type="email"
                     placeholder="seu@email.com"
                     className="input-field pl-11"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     required
                   />
                 </div>
@@ -60,6 +89,8 @@ const Login = () => {
                     type={showPassword ? "text" : "password"}
                     placeholder="Sua senha"
                     className="input-field pl-11 pr-11"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                     required
                   />
                   <button

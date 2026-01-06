@@ -1,19 +1,72 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { Button } from "@/components/ui/button";
 import { Eye, EyeOff, Mail, Lock, User, Phone, ArrowRight, Check } from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
+import { toast } from "sonner";
+import { z } from "zod";
+
+const signUpSchema = z.object({
+  fullName: z.string().min(3, "Nome deve ter pelo menos 3 caracteres").max(100),
+  email: z.string().email("Email inválido").max(255),
+  phone: z.string().min(10, "Telefone inválido").max(20),
+  password: z.string().min(8, "Senha deve ter pelo menos 8 caracteres").max(72),
+});
 
 const Cadastro = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [formData, setFormData] = useState({
+    fullName: "",
+    email: "",
+    phone: "",
+    password: "",
+  });
+  const [acceptedTerms, setAcceptedTerms] = useState(false);
+  const { signUp } = useAuth();
+  const navigate = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (!acceptedTerms) {
+      toast.error("Por favor, aceite os termos de uso");
+      return;
+    }
+
+    const validation = signUpSchema.safeParse(formData);
+    if (!validation.success) {
+      toast.error(validation.error.errors[0].message);
+      return;
+    }
+
     setIsLoading(true);
-    // Simular cadastro - sera implementado com backend
-    setTimeout(() => setIsLoading(false), 1000);
+    
+    const { error } = await signUp(
+      formData.email,
+      formData.password,
+      formData.fullName,
+      formData.phone
+    );
+    
+    if (error) {
+      if (error.message.includes("already registered")) {
+        toast.error("Este email já está cadastrado. Faça login ou use outro email.");
+      } else {
+        toast.error("Erro ao criar conta. Tente novamente.");
+      }
+      setIsLoading(false);
+      return;
+    }
+
+    toast.success("Conta criada com sucesso! Bem-vindo ao PetCare!");
+    navigate("/dashboard");
   };
 
   const benefits = [
@@ -63,16 +116,19 @@ const Cadastro = () => {
 
             <form onSubmit={handleSubmit} className="space-y-5">
               <div>
-                <label htmlFor="name" className="block text-sm font-medium text-foreground mb-2">
+                <label htmlFor="fullName" className="block text-sm font-medium text-foreground mb-2">
                   Nome completo
                 </label>
                 <div className="relative">
                   <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
                   <input
-                    id="name"
+                    id="fullName"
+                    name="fullName"
                     type="text"
                     placeholder="Seu nome"
                     className="input-field pl-11"
+                    value={formData.fullName}
+                    onChange={handleChange}
                     required
                   />
                 </div>
@@ -86,9 +142,12 @@ const Cadastro = () => {
                   <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
                   <input
                     id="email"
+                    name="email"
                     type="email"
                     placeholder="seu@email.com"
                     className="input-field pl-11"
+                    value={formData.email}
+                    onChange={handleChange}
                     required
                   />
                 </div>
@@ -102,9 +161,12 @@ const Cadastro = () => {
                   <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
                   <input
                     id="phone"
+                    name="phone"
                     type="tel"
                     placeholder="(11) 99999-9999"
                     className="input-field pl-11"
+                    value={formData.phone}
+                    onChange={handleChange}
                     required
                   />
                 </div>
@@ -118,9 +180,12 @@ const Cadastro = () => {
                   <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
                   <input
                     id="password"
+                    name="password"
                     type={showPassword ? "text" : "password"}
                     placeholder="Crie uma senha forte"
                     className="input-field pl-11 pr-11"
+                    value={formData.password}
+                    onChange={handleChange}
                     required
                     minLength={8}
                   />
@@ -139,6 +204,8 @@ const Cadastro = () => {
                 <input 
                   type="checkbox" 
                   className="w-4 h-4 rounded border-border text-primary focus:ring-primary mt-0.5" 
+                  checked={acceptedTerms}
+                  onChange={(e) => setAcceptedTerms(e.target.checked)}
                   required
                 />
                 <span className="text-sm text-muted-foreground">
