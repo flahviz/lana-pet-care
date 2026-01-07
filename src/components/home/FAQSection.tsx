@@ -9,32 +9,32 @@ const faqs = [
   {
     question: "Como funciona o pagamento?",
     answer:
-      "O pagamento e feito de forma segura pelo nosso site apos o agendamento. Aceitamos cartao de credito e PIX. Voce so paga apos a confirmacao do servico.",
+      "O pagamento é feito de forma segura pelo nosso site após o agendamento. Aceitamos cartão de crédito e PIX. Você só paga após a confirmação do serviço.",
   },
   {
     question: "Posso agendar para mais de um pet?",
     answer:
-      "Sim! Voce pode cadastrar quantos pets quiser e agendar servicos para um ou mais ao mesmo tempo. Ha um valor adicional por pet extra.",
+      "Sim! Você pode cadastrar quantos pets quiser e agendar serviços para um ou mais ao mesmo tempo. Há um valor adicional por pet extra.",
   },
   {
-    question: "Como recebo atualizacoes durante o servico?",
+    question: "Como recebo atualizações durante o serviço?",
     answer:
-      "Enviamos fotos e atualizacoes por WhatsApp durante e apos cada passeio ou visita. Voce acompanha tudo em tempo real.",
+      "Enviamos fotos e atualizações por WhatsApp durante e após cada passeio ou visita. Você acompanha tudo em tempo real.",
   },
   {
-    question: "Qual a politica de cancelamento?",
+    question: "Qual a política de cancelamento?",
     answer:
-      "Cancelamentos com ate 24h de antecedencia tem reembolso integral. Cancelamentos com menos de 24h estao sujeitos a cobranca de 50% do valor.",
+      "Cancelamentos com até 24h de antecedência têm reembolso integral. Cancelamentos com menos de 24h estão sujeitos à cobrança de 50% do valor.",
   },
   {
-    question: "Quais regioes sao atendidas?",
+    question: "Quais regiões são atendidas?",
     answer:
-      "Atendemos a regiao central e zona oeste de Sao Paulo. Consulte a disponibilidade para seu bairro no momento do agendamento.",
+      "Atendemos a região central e zona oeste de São Paulo. Consulte a disponibilidade para seu bairro no momento do agendamento.",
   },
   {
     question: "Meu pet precisa estar com vacinas em dia?",
     answer:
-      "Sim, para seguranca de todos os pets, solicitamos que as vacinas estejam atualizadas. Informe no cadastro do pet.",
+      "Sim, para segurança de todos os pets, solicitamos que as vacinas estejam atualizadas. Informe no cadastro do pet.",
   },
 ];
 
@@ -48,7 +48,7 @@ const FAQSection = () => {
               Perguntas frequentes
             </h2>
             <p className="text-lg text-muted-foreground">
-              Tire suas duvidas sobre nossos servicos
+              Tire suas dúvidas sobre nossos serviços
             </p>
           </div>
 

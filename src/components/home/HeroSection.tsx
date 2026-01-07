@@ -20,9 +20,13 @@ const HeroSection = () => {
       <div className="container-section relative z-10 py-16 md:py-24">
         <div className="max-w-2xl">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-background/10 backdrop-blur-sm border border-background/20 mb-6">
-            <Star className="w-4 h-4 text-accent fill-accent" />
+            <div className="flex items-center gap-0.5">
+              {[...Array(5)].map((_, i) => (
+                <Star key={i} className="w-4 h-4 text-accent fill-accent" />
+              ))}
+            </div>
             <span className="text-sm font-medium text-background">
-              Nota 4.9 - Clientes satisfeitos
+              Clientes satisfeitos
             </span>
           </div>
 
@@ -31,16 +35,16 @@ const HeroSection = () => {
           </h1>
 
           <p className="text-lg md:text-xl text-background/90 mb-8 leading-relaxed">
-            Passeios diarios e visitas com toda a atencao que seu melhor amigo merece. 
-            Servico personalizado e seguro na Grande Florianopolis.
+            Passeios diários e visitas com toda a atenção que seu melhor amigo merece. 
+            Serviço personalizado e seguro na Grande Florianópolis.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 mb-12">
             <Button variant="hero-accent" size="xl" asChild>
-              <Link to="/cadastro">Comecar agora</Link>
+              <Link to="/cadastro">Começar agora</Link>
             </Button>
             <Button variant="hero-outline" size="xl" className="border-background text-background hover:bg-background hover:text-foreground" asChild>
-              <Link to="/avaliacoes">Ver avaliacoes</Link>
+              <Link to="/avaliacoes">Ver avaliações</Link>
             </Button>
           </div>
 
@@ -52,11 +56,11 @@ const HeroSection = () => {
             </div>
             <div className="flex items-center gap-2 text-background/80">
               <Clock className="w-5 h-5" />
-              <span className="text-sm font-medium">Agenda flexivel</span>
+              <span className="text-sm font-medium">Agenda flexível</span>
             </div>
             <div className="flex items-center gap-2 text-background/80">
               <Star className="w-5 h-5" />
-              <span className="text-sm font-medium">+10 anos de experiencia</span>
+              <span className="text-sm font-medium">+10 anos de experiência</span>
             </div>
           </div>
         </div>

@@ -4,32 +4,32 @@ const differentials = [
   {
     icon: Heart,
     title: "Cuidado personalizado",
-    description: "Cada pet recebe atencao individual de acordo com suas necessidades e temperamento.",
+    description: "Cada pet recebe atenção individual de acordo com suas necessidades e temperamento.",
   },
   {
     icon: Shield,
-    title: "Seguranca garantida",
-    description: "Pagamento seguro, rotas monitoradas e comunicacao constante com voce.",
+    title: "Segurança garantida",
+    description: "Pagamento seguro, rotas monitoradas e comunicação constante com você.",
   },
   {
     icon: Camera,
-    title: "Fotos e atualizacoes",
-    description: "Receba fotos e relatorios do seu pet durante e apos cada servico.",
+    title: "Fotos e atualizações",
+    description: "Receba fotos e relatórios do seu pet durante e após cada serviço.",
   },
   {
     icon: Clock,
-    title: "Horarios flexiveis",
-    description: "Agenda adaptada a sua rotina, com opcoes de manha, tarde ou noite.",
+    title: "Horários flexíveis",
+    description: "Agenda adaptada à sua rotina, com opções de manhã, tarde ou noite.",
   },
   {
     icon: Award,
-    title: "Experiencia comprovada",
+    title: "Experiência comprovada",
     description: "Mais de 5 anos cuidando de pets com carinho e profissionalismo.",
   },
   {
     icon: MessageCircle,
     title: "Suporte direto",
-    description: "Comunicacao facil e rapida para tirar duvidas ou fazer ajustes.",
+    description: "Comunicação fácil e rápida para tirar dúvidas ou fazer ajustes.",
   },
 ];
 
@@ -39,10 +39,10 @@ const DifferentialsSection = () => {
       <div className="container-section">
         <div className="text-center max-w-2xl mx-auto mb-12 md:mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-primary-foreground mb-4">
-            Por que escolher nosso servico
+            Por que escolher nosso serviço
           </h2>
           <p className="text-lg text-primary-foreground/80">
-            Diferenciais que fazem toda a diferenca no cuidado do seu pet
+            Diferenciais que fazem toda a diferença no cuidado do seu pet
           </p>
         </div>
 

@@ -11,26 +11,26 @@ const allReviews = [
     name: "Ana P.",
     rating: 5,
     service: "Dog Walker",
-    date: "15 de Dezembro, 2024",
-    comment: "Excelente profissional! Meu cachorro adora os passeios e volta sempre feliz e cansado. Super recomendo para quem precisa de alguem de confianca.",
-    tags: ["Pontualidade", "Cuidado", "Comunicacao"],
+    date: "15 de dezembro, 2024",
+    comment: "Excelente profissional! Meu cachorro adora os passeios e volta sempre feliz e cansado. Super recomendo para quem precisa de alguém de confiança.",
+    tags: ["Pontualidade", "Cuidado", "Comunicação"],
   },
   {
     id: 2,
     name: "Carlos M.",
     rating: 5,
     service: "Pet Sitter",
-    date: "28 de Novembro, 2024",
+    date: "28 de novembro, 2024",
     comment: "Deixei meus dois cachorros durante uma viagem de 5 dias. Recebi fotos todos os dias e eles foram muito bem cuidados. Voltarei a usar com certeza!",
-    tags: ["Cuidado", "Comunicacao"],
+    tags: ["Cuidado", "Comunicação"],
   },
   {
     id: 3,
     name: "Juliana S.",
     rating: 5,
     service: "Dog Walker",
-    date: "20 de Novembro, 2024",
-    comment: "Pontualidade e cuidado impecaveis. Minha Luna fica animada quando ve que e dia de passeio. Nota 10!",
+    date: "20 de novembro, 2024",
+    comment: "Pontualidade e cuidado impecáveis. Minha Luna fica animada quando vê que é dia de passeio. Nota 10!",
     tags: ["Pontualidade", "Cuidado"],
   },
   {
@@ -38,17 +38,17 @@ const allReviews = [
     name: "Roberto F.",
     rating: 5,
     service: "Pet Sitter",
-    date: "10 de Novembro, 2024",
-    comment: "Minha gata e muito arisca, mas foi muito bem tratada. Recebi atualizacoes constantes e fiquei tranquilo durante toda a viagem.",
-    tags: ["Cuidado", "Comunicacao"],
+    date: "10 de novembro, 2024",
+    comment: "Minha gata é muito arisca, mas foi muito bem tratada. Recebi atualizações constantes e fiquei tranquilo durante toda a viagem.",
+    tags: ["Cuidado", "Comunicação"],
   },
   {
     id: 5,
     name: "Mariana L.",
-    rating: 4,
+    rating: 5,
     service: "Dog Walker",
-    date: "05 de Novembro, 2024",
-    comment: "Otimo servico! Meu cachorro gasta energia e fica muito mais calmo em casa. Recomendo.",
+    date: "05 de novembro, 2024",
+    comment: "Ótimo serviço! Meu cachorro gasta energia e fica muito mais calmo em casa. Recomendo.",
     tags: ["Cuidado"],
   },
   {
@@ -56,17 +56,17 @@ const allReviews = [
     name: "Fernando G.",
     rating: 5,
     service: "Pet Sitter",
-    date: "25 de Outubro, 2024",
-    comment: "Profissional muito atenciosa e carinhosa. Meus pets foram tratados como se fossem dela. Confianca total.",
-    tags: ["Cuidado", "Comunicacao", "Pontualidade"],
+    date: "25 de outubro, 2024",
+    comment: "Profissional muito atenciosa e carinhosa. Meus pets foram tratados como se fossem dela. Confiança total.",
+    tags: ["Cuidado", "Comunicação", "Pontualidade"],
   },
   {
     id: 7,
-    name: "Patricia R.",
+    name: "Patrícia R.",
     rating: 5,
     service: "Dog Walker",
-    date: "18 de Outubro, 2024",
-    comment: "Servico impecavel! Sempre no horario combinado e meu dog volta muito feliz. Ja indiquei para varios amigos.",
+    date: "18 de outubro, 2024",
+    comment: "Serviço impecável! Sempre no horário combinado e meu dog volta muito feliz. Já indiquei para vários amigos.",
     tags: ["Pontualidade", "Cuidado"],
   },
   {
@@ -74,9 +74,9 @@ const allReviews = [
     name: "Lucas H.",
     rating: 5,
     service: "Pet Sitter",
-    date: "10 de Outubro, 2024",
-    comment: "Primeira vez usando pet sitter e a experiencia foi otima. Comunicacao clara e fotos lindas do meu cachorro brincando.",
-    tags: ["Comunicacao", "Cuidado"],
+    date: "10 de outubro, 2024",
+    comment: "Primeira vez usando pet sitter e a experiência foi ótima. Comunicação clara e fotos lindas do meu cachorro brincando.",
+    tags: ["Comunicação", "Cuidado"],
   },
 ];
 
@@ -86,8 +86,6 @@ const Avaliacoes = () => {
   const filteredReviews = filter === "all" 
     ? allReviews 
     : allReviews.filter(r => r.service === filter);
-
-  const averageRating = (allReviews.reduce((acc, r) => acc + r.rating, 0) / allReviews.length).toFixed(1);
 
   return (
     <div className="min-h-screen bg-background">
@@ -99,7 +97,7 @@ const Avaliacoes = () => {
           <div className="container-section">
             <div className="max-w-3xl mx-auto text-center">
               <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
-                Avaliacoes de clientes
+                Avaliações de clientes
               </h1>
               <p className="text-lg text-muted-foreground mb-8">
                 Veja o que nossos clientes dizem sobre o cuidado com seus pets
@@ -109,20 +107,21 @@ const Avaliacoes = () => {
               <div className="flex flex-col sm:flex-row items-center justify-center gap-8">
                 <div className="flex flex-col items-center">
                   <div className="flex items-center gap-2 mb-2">
-                    <span className="text-5xl font-bold text-foreground">{averageRating}</span>
-                    <Star className="w-10 h-10 text-accent fill-accent" />
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} className="w-8 h-8 text-accent fill-accent" />
+                    ))}
                   </div>
-                  <span className="text-muted-foreground">Nota media</span>
+                  <span className="text-muted-foreground">Clientes satisfeitos</span>
                 </div>
                 <div className="hidden sm:block w-px h-16 bg-border" />
                 <div className="flex flex-col items-center">
                   <span className="text-5xl font-bold text-foreground">{allReviews.length}+</span>
-                  <span className="text-muted-foreground">Avaliacoes</span>
+                  <span className="text-muted-foreground">Avaliações</span>
                 </div>
                 <div className="hidden sm:block w-px h-16 bg-border" />
                 <div className="flex flex-col items-center">
                   <span className="text-5xl font-bold text-foreground">100%</span>
-                  <span className="text-muted-foreground">Recomendacoes</span>
+                  <span className="text-muted-foreground">Recomendações</span>
                 </div>
               </div>
             </div>
