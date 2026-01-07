@@ -5,19 +5,19 @@ const steps = [
     icon: UserPlus,
     title: "Crie sua conta",
     description:
-      "Cadastre-se gratuitamente e acesse precos, agenda e disponibilidade.",
+      "Cadastre-se gratuitamente e acesse preços, agenda e disponibilidade.",
   },
   {
     icon: PawPrint,
     title: "Cadastre seu pet",
     description:
-      "Adicione as informacoes do seu pet para um cuidado personalizado.",
+      "Adicione as informações do seu pet para um cuidado personalizado.",
   },
   {
     icon: CalendarCheck,
-    title: "Agende o servico",
+    title: "Agende o serviço",
     description:
-      "Escolha o dia, horario e tipo de servico. Pagamento seguro pelo app.",
+      "Escolha o dia, horário e tipo de serviço. Pagamento seguro pelo app.",
   },
 ];
 
@@ -30,7 +30,7 @@ const HowItWorksSection = () => {
             Como funciona
           </h2>
           <p className="text-lg text-muted-foreground">
-            Em tres passos simples, seu pet recebe o melhor cuidado
+            Em três passos simples, seu pet recebe o melhor cuidado
           </p>
         </div>
 

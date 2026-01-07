@@ -9,16 +9,16 @@ const services = [
     id: "dog-walker",
     title: "Dog Walker",
     description:
-      "Passeios diarios com horarios flexiveis. Seu cao tera exercicio, socializacao e muito carinho durante o passeio.",
-    features: ["Passeios de 30 ou 60 minutos", "Fotos e relatorio do passeio", "Horarios personalizados"],
+      "Passeios diários com horários flexíveis. Seu cão terá exercício, socialização e muito carinho durante o passeio.",
+    features: ["Passeios de 30 ou 60 minutos", "Fotos e relatório do passeio", "Horários personalizados"],
     image: dogWalkerImage,
   },
   {
     id: "pet-sitter",
     title: "Pet Sitter",
     description:
-      "Visitas na sua casa para cuidar do seu pet enquanto voce viaja ou trabalha. Carinho e atencao garantidos.",
-    features: ["Visitas de 1h ou 2h", "Alimentacao e medicacao", "Fotos e atualizacoes"],
+      "Visitas na sua casa para cuidar do seu pet enquanto você viaja ou trabalha. Carinho e atenção garantidos.",
+    features: ["Visitas de 1h ou 2h", "Alimentação e medicação", "Fotos e atualizações"],
     image: petSitterImage,
   },
 ];
@@ -29,7 +29,7 @@ const ServicesSection = () => {
       <div className="container-section">
         <div className="text-center max-w-2xl mx-auto mb-12 md:mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-            Servicos especializados
+            Serviços especializados
           </h2>
           <p className="text-lg text-muted-foreground">
             Escolha o tipo de cuidado ideal para as necessidades do seu pet
@@ -66,7 +66,7 @@ const ServicesSection = () => {
                 </ul>
                 <Button variant="default" className="w-full" asChild>
                   <Link to="/cadastro">
-                    Solicitar servico
+                    Solicitar serviço
                     <ArrowRight className="w-4 h-4" />
                   </Link>
                 </Button>

@@ -28,7 +28,7 @@ const testimonials = [
     service: "Dog Walker",
     date: "Novembro 2024",
     comment:
-      "Pontualidade e cuidado impecaveis. Minha Luna fica animada quando ve que e dia de passeio.",
+      "Pontualidade e cuidado impecáveis. Minha Luna fica animada quando vê que é dia de passeio.",
   },
 ];
 
@@ -47,15 +47,14 @@ const TestimonialsPreview = () => {
                   <Star key={i} className="w-5 h-5 text-accent fill-accent" />
                 ))}
               </div>
-              <span className="text-lg font-semibold text-foreground">4.9</span>
               <span className="text-muted-foreground">
-                nota media
+                Clientes satisfeitos
               </span>
             </div>
           </div>
           <Button variant="outline" asChild>
             <Link to="/avaliacoes">
-              Ver todas as avaliacoes
+              Ver todas as avaliações
               <ArrowRight className="w-4 h-4" />
             </Link>
           </Button>
