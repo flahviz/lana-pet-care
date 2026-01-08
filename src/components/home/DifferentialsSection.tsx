@@ -24,7 +24,7 @@ const differentials = [
   {
     icon: Award,
     title: "Experiência comprovada",
-    description: "Mais de 5 anos cuidando de pets com carinho e profissionalismo.",
+    description: "Mais de 10 anos cuidando de pets com carinho e profissionalismo.",
   },
   {
     icon: MessageCircle,
