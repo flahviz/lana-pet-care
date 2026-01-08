@@ -22,10 +22,10 @@ const AdminConfiguracoes = () => {
 
   const [businessSettings, setBusinessSettings] = useState({
     business_name: "Lana Pet Care",
-    business_email: "contato@lanapetcare.com",
-    business_phone: "",
+    business_email: "elianepetcare@gmail.com",
+    business_phone: "(48) 99663-9483",
     business_address: "Grande Florianópolis, SC",
-    whatsapp_number: "",
+    whatsapp_number: "5548996639483",
   });
 
   useEffect(() => {

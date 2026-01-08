@@ -56,14 +56,14 @@ const Footer = () => {
           <div className="space-y-4">
             <h4 className="font-semibold text-base">Contato</h4>
             <div className="flex flex-col gap-3">
-              <a href="mailto:lanapetcare@gmail.com" className="flex items-center gap-2 text-sm text-background/70 hover:text-background transition-colors">
+              <a href="mailto:elianepetcare@gmail.com" className="flex items-center gap-2 text-sm text-background/70 hover:text-background transition-colors">
                 <Mail className="w-4 h-4" />
-                lanapetcare@gmail.com
+                elianepetcare@gmail.com
               </a>
               {user ? (
-                <a href="https://wa.me/5548999999999" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm text-background/70 hover:text-background transition-colors">
+                <a href="https://wa.me/5548996639483" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm text-background/70 hover:text-background transition-colors">
                   <Phone className="w-4 h-4" />
-                  (48) 99999-9999
+                  (48) 99663-9483
                 </a>
               ) : (
                 <span className="flex items-center gap-2 text-sm text-background/70">

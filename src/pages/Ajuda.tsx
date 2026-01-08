@@ -152,22 +152,22 @@ const Ajuda = () => {
               
               <div className="grid sm:grid-cols-3 gap-6">
                 <a 
-                  href="mailto:lanapetcare@gmail.com" 
+                  href="mailto:elianepetcare@gmail.com" 
                   className="p-6 rounded-xl bg-primary-foreground/10 backdrop-blur-sm border border-primary-foreground/20 hover:bg-primary-foreground/20 transition-colors"
                 >
                   <Mail className="w-8 h-8 text-primary-foreground mx-auto mb-3" />
                   <p className="font-semibold text-primary-foreground">E-mail</p>
-                  <p className="text-sm text-primary-foreground/70">lanapetcare@gmail.com</p>
+                  <p className="text-sm text-primary-foreground/70">elianepetcare@gmail.com</p>
                 </a>
                 
                 {user ? (
                   <a 
-                    href="tel:+5548999999999" 
+                    href="tel:+5548996639483" 
                     className="p-6 rounded-xl bg-primary-foreground/10 backdrop-blur-sm border border-primary-foreground/20 hover:bg-primary-foreground/20 transition-colors"
                   >
                     <Phone className="w-8 h-8 text-primary-foreground mx-auto mb-3" />
                     <p className="font-semibold text-primary-foreground">Telefone</p>
-                    <p className="text-sm text-primary-foreground/70">(48) 99999-9999</p>
+                    <p className="text-sm text-primary-foreground/70">(48) 99663-9483</p>
                   </a>
                 ) : (
                   <div className="p-6 rounded-xl bg-primary-foreground/10 backdrop-blur-sm border border-primary-foreground/20">
