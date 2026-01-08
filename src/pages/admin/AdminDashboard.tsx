@@ -26,7 +26,7 @@ interface RecentBooking {
   scheduled_time: string;
   status: string;
   total_price: number;
-  profiles: { full_name: string } | null;
+  user_id: string;
   service_variants: { name: string; services: { name: string } | null } | null;
 }
 
@@ -61,7 +61,7 @@ const AdminDashboard = () => {
             scheduled_time,
             status,
             total_price,
-            profiles!bookings_user_id_fkey(full_name),
+            user_id,
             service_variants(name, services(name))
           `)
           .order("created_at", { ascending: false })
@@ -204,7 +204,7 @@ const AdminDashboard = () => {
                   <div className="flex-1">
                     <div className="flex items-center gap-3 mb-1">
                       <p className="font-medium text-foreground">
-                        {booking.profiles?.full_name || "Cliente"}
+                        Pedido #{booking.id.slice(0, 8)}
                       </p>
                       <span className={`px-2 py-0.5 text-xs font-medium rounded-full ${statusConfig[booking.status]?.className || ""}`}>
                         {statusConfig[booking.status]?.label || booking.status}

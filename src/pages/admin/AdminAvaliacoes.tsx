@@ -34,7 +34,7 @@ interface Review {
   punctuality: boolean;
   care: boolean;
   communication: boolean;
-  profiles: { full_name: string } | null;
+  user_id: string;
   bookings: { 
     service_variants: { 
       name: string; 
@@ -70,7 +70,7 @@ const AdminAvaliacoes = () => {
           punctuality,
           care,
           communication,
-          profiles!reviews_user_id_fkey(full_name),
+          user_id,
           bookings(service_variants(name, services(name)))
         `)
         .order("created_at", { ascending: false });
@@ -209,7 +209,7 @@ const AdminAvaliacoes = () => {
                     <div className="flex-1">
                       <div className="flex items-center gap-3 mb-2">
                         <p className="font-semibold text-foreground">
-                          {review.profiles?.full_name || "Cliente"}
+                          Avaliação #{review.id.slice(0, 8)}
                         </p>
                         <span className={`px-2 py-0.5 text-xs font-medium rounded-full ${statusConfig[review.status]?.className}`}>
                           {statusConfig[review.status]?.label}
@@ -327,7 +327,7 @@ const AdminAvaliacoes = () => {
                   "{selectedReview.comment}"
                 </p>
                 <p className="text-xs text-muted-foreground mt-1">
-                  - {selectedReview.profiles?.full_name}
+                  - Usuário #{selectedReview.user_id.slice(0, 8)}
                 </p>
               </div>
             )}

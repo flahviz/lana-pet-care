@@ -75,7 +75,7 @@ const AdminPrecos = () => {
   const fetchData = async () => {
     try {
       const [servicesRes, variantsRes, extrasRes, settingsRes] = await Promise.all([
-        supabase.from("services").select("*").order("sort_order"),
+        supabase.from("services").select("*").eq("is_active", true).order("sort_order"),
         supabase.from("service_variants").select("*").order("sort_order"),
         supabase.from("service_extras").select("*").order("sort_order"),
         supabase.from("settings").select("*").eq("key", "additional_pet_fee").single(),
