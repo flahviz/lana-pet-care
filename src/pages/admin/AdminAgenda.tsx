@@ -83,6 +83,29 @@ const AdminAgenda = () => {
     }
   };
 
+  const createAvailability = async (dayOfWeek: number) => {
+    try {
+      const { data, error } = await supabase
+        .from("availability")
+        .insert({
+          day_of_week: dayOfWeek,
+          start_time: "08:00",
+          end_time: "18:00",
+          is_active: true,
+        })
+        .select()
+        .single();
+
+      if (error) throw error;
+      
+      setAvailability((prev) => [...prev, data]);
+      toast.success("Disponibilidade criada");
+    } catch (error) {
+      console.error("Error creating availability:", error);
+      toast.error("Erro ao criar disponibilidade");
+    }
+  };
+
   const updateAvailability = async (id: string, updates: Partial<Availability>) => {
     try {
       const { error } = await supabase
@@ -182,9 +205,13 @@ const AdminAgenda = () => {
                   <div className="flex items-center gap-4">
                     <Switch
                       checked={dayAvail?.is_active ?? false}
-                      onCheckedChange={(checked) =>
-                        dayAvail && updateAvailability(dayAvail.id, { is_active: checked })
-                      }
+                      onCheckedChange={(checked) => {
+                        if (dayAvail) {
+                          updateAvailability(dayAvail.id, { is_active: checked });
+                        } else if (checked) {
+                          createAvailability(day.value);
+                        }
+                      }}
                     />
                     <span className={`font-medium ${dayAvail?.is_active ? "text-foreground" : "text-muted-foreground"}`}>
                       {day.label}
