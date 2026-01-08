@@ -56,9 +56,9 @@ const Footer = () => {
           <div className="space-y-4">
             <h4 className="font-semibold text-base">Contato</h4>
             <div className="flex flex-col gap-3">
-              <a href="mailto:contato@lanapetcare.com.br" className="flex items-center gap-2 text-sm text-background/70 hover:text-background transition-colors">
+              <a href="mailto:lanapetcare@gmail.com" className="flex items-center gap-2 text-sm text-background/70 hover:text-background transition-colors">
                 <Mail className="w-4 h-4" />
-                contato@lanapetcare.com.br
+                lanapetcare@gmail.com
               </a>
               {user ? (
                 <a href="https://wa.me/5548999999999" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm text-background/70 hover:text-background transition-colors">
@@ -82,7 +82,7 @@ const Footer = () => {
         <div className="mt-12 pt-8 border-t border-background/20">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <p className="text-sm text-background/60">
-              2024 Lana Pet Care. Todos os direitos reservados.
+              © 2025 Lana Pet Care. Todos os direitos reservados.
             </p>
             <div className="flex gap-6">
               <Link to="/politicas" className="text-sm text-background/60 hover:text-background transition-colors">
