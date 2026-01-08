@@ -17,6 +17,8 @@ const MeusPets = lazy(() => import("./pages/MeusPets"));
 const Agenda = lazy(() => import("./pages/Agenda"));
 const NovoPedido = lazy(() => import("./pages/NovoPedido"));
 const MeusPedidos = lazy(() => import("./pages/MeusPedidos"));
+const Perfil = lazy(() => import("./pages/Perfil"));
+const MinhasAvaliacoes = lazy(() => import("./pages/MinhasAvaliacoes"));
 const RecuperarSenha = lazy(() => import("./pages/RecuperarSenha"));
 const RedefinirSenha = lazy(() => import("./pages/RedefinirSenha"));
 const NotFound = lazy(() => import("./pages/NotFound"));
@@ -62,6 +64,8 @@ const App = () => (
               <Route path="/agenda" element={<Agenda />} />
               <Route path="/novo-pedido" element={<NovoPedido />} />
               <Route path="/meus-pedidos" element={<MeusPedidos />} />
+              <Route path="/perfil" element={<Perfil />} />
+              <Route path="/minhas-avaliacoes" element={<MinhasAvaliacoes />} />
 
               {/* Admin Routes */}
               <Route path="/admin" element={<AdminLayout />}>

@@ -32,7 +32,7 @@ const CTASection = () => {
               <Button 
                 variant="outline" 
                 size="xl" 
-                className="border-accent-foreground text-accent-foreground hover:bg-accent-foreground hover:text-accent w-full sm:w-auto"
+                className="border-2 border-accent-foreground bg-accent text-accent-foreground hover:bg-accent-foreground hover:text-accent w-full sm:w-auto"
                 asChild
               >
                 <Link to="/login">Ja tenho conta</Link>
