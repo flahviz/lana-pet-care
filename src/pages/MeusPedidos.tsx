@@ -11,8 +11,10 @@ import {
   CheckCircle2,
   XCircle,
   AlertCircle,
-  Calendar
+  Calendar,
+  CreditCard
 } from "lucide-react";
+import { PaymentModal } from "@/components/payment/PaymentModal";
 
 interface Booking {
   id: string;
@@ -21,6 +23,9 @@ interface Booking {
   status: string;
   total_price: number;
   created_at: string;
+  payment_status: string | null;
+  payment_method: string | null;
+  payment_proof_url: string | null;
   service_variants: {
     name: string;
     services: {
@@ -39,6 +44,9 @@ const MeusPedidos = () => {
   const navigate = useNavigate();
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [paymentModalOpen, setPaymentModalOpen] = useState(false);
+  const [selectedBooking, setSelectedBooking] = useState<Booking | null>(null);
+  const [pixKey, setPixKey] = useState("");
 
   useEffect(() => {
     if (!authLoading && !user) {
@@ -49,8 +57,21 @@ const MeusPedidos = () => {
   useEffect(() => {
     if (user) {
       fetchBookings();
+      fetchPixKey();
     }
   }, [user]);
+
+  const fetchPixKey = async () => {
+    const { data } = await supabase
+      .from("settings")
+      .select("value")
+      .eq("key", "pix_key")
+      .single();
+    
+    if (data?.value) {
+      setPixKey(String(data.value).replace(/"/g, ''));
+    }
+  };
 
   const fetchBookings = async () => {
     const { data, error } = await supabase
@@ -62,6 +83,9 @@ const MeusPedidos = () => {
         status,
         total_price,
         created_at,
+        payment_status,
+        payment_method,
+        payment_proof_url,
         service_variants (
           name,
           services (
@@ -80,6 +104,17 @@ const MeusPedidos = () => {
       setBookings(data as unknown as Booking[]);
     }
     setIsLoading(false);
+  };
+
+  const handleOpenPayment = (booking: Booking) => {
+    setSelectedBooking(booking);
+    setPaymentModalOpen(true);
+  };
+
+  const handleClosePayment = () => {
+    setPaymentModalOpen(false);
+    setSelectedBooking(null);
+    fetchBookings();
   };
 
   const formatPrice = (price: number) => 
@@ -168,13 +203,28 @@ const MeusPedidos = () => {
                           {booking.addresses?.street}, {booking.addresses?.number} - {booking.addresses?.neighborhood}
                         </p>
                       </div>
-                      <div className="text-right">
+                      <div className="text-right space-y-2">
                         <p className="text-lg font-bold text-primary">
                           {formatPrice(booking.total_price)}
                         </p>
                         <p className="text-xs text-muted-foreground">
                           Pedido #{booking.id.slice(0, 8)}
                         </p>
+                        {booking.status === "confirmed" && booking.payment_status !== "paid" && (
+                          <Button
+                            size="sm"
+                            onClick={() => handleOpenPayment(booking)}
+                            className="w-full"
+                          >
+                            <CreditCard className="w-4 h-4 mr-2" />
+                            {booking.payment_proof_url ? "Comprovante enviado" : "Pagar via PIX"}
+                          </Button>
+                        )}
+                        {booking.payment_status === "paid" && (
+                          <p className="text-xs text-success font-medium">
+                            ✓ Pagamento confirmado
+                          </p>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -186,6 +236,16 @@ const MeusPedidos = () => {
       </main>
 
       <Footer />
+
+      {selectedBooking && (
+        <PaymentModal
+          open={paymentModalOpen}
+          onClose={handleClosePayment}
+          bookingId={selectedBooking.id}
+          totalPrice={selectedBooking.total_price}
+          pixKey={pixKey}
+        />
+      )}
     </div>
   );
 };

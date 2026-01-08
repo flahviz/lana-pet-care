@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
-import { Search, Filter, Check, X, Play } from "lucide-react";
+import { Search, Filter, Check, X, Play, CreditCard } from "lucide-react";
+import { PaymentConfirmDialog } from "@/components/payment/PaymentConfirmDialog";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -36,6 +37,9 @@ interface Booking {
   notes: string | null;
   created_at: string;
   user_id: string;
+  payment_status: string | null;
+  payment_method: string | null;
+  payment_proof_url: string | null;
   service_variants: { name: string; services: { name: string } | null } | null;
   addresses: { street: string; number: string; neighborhood: string } | null;
 }
@@ -47,6 +51,7 @@ const AdminPedidos = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState<string>(searchParams.get("status") || "all");
   const [cancelDialogOpen, setCancelDialogOpen] = useState(false);
+  const [paymentDialogOpen, setPaymentDialogOpen] = useState(false);
   const [selectedBooking, setSelectedBooking] = useState<Booking | null>(null);
   const [cancelReason, setCancelReason] = useState("");
 
@@ -68,6 +73,9 @@ const AdminPedidos = () => {
           notes,
           created_at,
           user_id,
+          payment_status,
+          payment_method,
+          payment_proof_url,
           service_variants(name, services(name)),
           addresses(street, number, neighborhood)
         `)
@@ -231,10 +239,22 @@ const AdminPedidos = () => {
                       )}
                     </div>
 
-                    <div className="flex items-center gap-4">
+                    <div className="flex flex-col items-end gap-2">
                       <p className="font-bold text-lg text-foreground">
                         R$ {booking.total_price.toFixed(2).replace(".", ",")}
                       </p>
+                      
+                      {booking.payment_status === "paid" && (
+                        <span className="text-xs text-success font-medium">
+                          ✓ Pagamento confirmado
+                        </span>
+                      )}
+                      
+                      {booking.payment_proof_url && booking.payment_status !== "paid" && (
+                        <span className="text-xs text-warning font-medium">
+                          ⚠ Aguardando confirmação
+                        </span>
+                      )}
                       
                       <div className="flex gap-2">
                         {booking.status === "pending" && (
@@ -259,7 +279,21 @@ const AdminPedidos = () => {
                             </Button>
                           </>
                         )}
-                        {booking.status === "confirmed" && (
+                        {booking.status === "confirmed" && booking.payment_proof_url && booking.payment_status !== "paid" && (
+                          <Button
+                            size="sm"
+                            variant="default"
+                            className="bg-success hover:bg-success/90"
+                            onClick={() => {
+                              setSelectedBooking(booking);
+                              setPaymentDialogOpen(true);
+                            }}
+                          >
+                            <CreditCard className="w-4 h-4 mr-1" />
+                            Confirmar Pagamento
+                          </Button>
+                        )}
+                        {booking.status === "confirmed" && booking.payment_status === "paid" && (
                           <Button
                             size="sm"
                             variant="default"
@@ -315,6 +349,21 @@ const AdminPedidos = () => {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
+      {/* Payment Confirmation Dialog */}
+      {selectedBooking && selectedBooking.payment_proof_url && (
+        <PaymentConfirmDialog
+          open={paymentDialogOpen}
+          onClose={() => {
+            setPaymentDialogOpen(false);
+            setSelectedBooking(null);
+            fetchBookings();
+          }}
+          bookingId={selectedBooking.id}
+          proofUrl={selectedBooking.payment_proof_url}
+          totalPrice={selectedBooking.total_price}
+        />
+      )}
     </div>
   );
 };
