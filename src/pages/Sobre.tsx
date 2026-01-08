@@ -7,30 +7,30 @@ import petSitterImage from "@/assets/pet-sitter-home.jpg";
 
 const Sobre = () => {
   const stats = [
-    { value: "10+", label: "Anos de experiencia" },
-    { value: "4.9", label: "Nota media" },
+    { value: "10+", label: "Anos de experiência" },
+    { value: "5 ★", label: "Clientes satisfeitos" },
   ];
 
   const values = [
     {
       icon: Heart,
       title: "Amor pelos animais",
-      description: "Cada pet e tratado com o carinho e a atencao que merece, como se fosse da familia.",
+      description: "Cada pet é tratado com o carinho e a atenção que merece, como se fosse da família.",
     },
     {
       icon: Shield,
-      title: "Seguranca em primeiro lugar",
-      description: "Rotas seguras, comunicacao constante e cuidado redobrado em todas as atividades.",
+      title: "Segurança em primeiro lugar",
+      description: "Rotas seguras, comunicação constante e cuidado redobrado em todas as atividades.",
     },
     {
       icon: Clock,
       title: "Pontualidade",
-      description: "Respeito ao seu tempo e a rotina do seu pet, sempre no horario combinado.",
+      description: "Respeito ao seu tempo e à rotina do seu pet, sempre no horário combinado.",
     },
     {
       icon: Award,
       title: "Profissionalismo",
-      description: "Servico dedicado e transparente, com relatorios e fotos de cada atendimento.",
+      description: "Serviço dedicado e transparente, com relatórios e fotos de cada atendimento.",
     },
   ];
 
@@ -45,20 +45,20 @@ const Sobre = () => {
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <div>
                 <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
-                  Cuidando de pets com amor e dedicacao
+                  Cuidando de pets com amor e dedicação
                 </h1>
                 <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
-                  Ola! Sou a Lana, apaixonada por animais desde sempre. Ha mais de 10 anos, 
-                  transformei essa paixao em profissao, oferecendo servicos de dog walker 
+                  Olá! Sou a Lana, apaixonada por animais desde sempre. Há mais de 10 anos, 
+                  transformei essa paixão em profissão, oferecendo serviços de dog walker 
                   e pet sitter para tutores que buscam cuidado de qualidade para seus pets.
                 </p>
                 <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
-                  Cada pet que atendo recebe atencao individualizada, respeitando suas 
-                  necessidades e temperamento. Meu objetivo e proporcionar bem-estar 
-                  ao seu melhor amigo e tranquilidade para voce.
+                  Cada pet que atendo recebe atenção individualizada, respeitando suas 
+                  necessidades e temperamento. Meu objetivo é proporcionar bem-estar 
+                  ao seu melhor amigo e tranquilidade para você.
                 </p>
                 <Button variant="default" size="lg" asChild>
-                  <Link to="/cadastro">Conhecer servicos</Link>
+                  <Link to="/cadastro">Conhecer serviços</Link>
                 </Button>
               </div>
               <div className="relative">
@@ -96,7 +96,7 @@ const Sobre = () => {
                 Meus valores
               </h2>
               <p className="text-lg text-muted-foreground">
-                Principios que guiam cada atendimento
+                Princípios que guiam cada atendimento
               </p>
             </div>
 
@@ -124,20 +124,20 @@ const Sobre = () => {
             <div className="max-w-3xl mx-auto text-center">
               <MapPin className="w-12 h-12 text-primary mx-auto mb-4" />
               <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-                Area de atendimento
+                Área de atendimento
               </h2>
               <p className="text-lg text-muted-foreground mb-6">
-                Atendo a Grande Florianopolis, incluindo:
+                Atendo a Grande Florianópolis, incluindo:
               </p>
               <div className="flex flex-wrap justify-center gap-3">
-                {["Florianopolis", "Sao Jose", "Palhoca", "Biguacu", "Santo Amaro da Imperatriz"].map((bairro) => (
+                {["Florianópolis", "São José", "Palhoça", "Biguaçu", "Santo Amaro da Imperatriz"].map((bairro) => (
                   <span key={bairro} className="px-4 py-2 bg-background rounded-full text-foreground font-medium">
                     {bairro}
                   </span>
                 ))}
               </div>
               <p className="text-muted-foreground mt-6">
-                Nao encontrou seu bairro? Entre em contato para verificar disponibilidade.
+                Não encontrou seu bairro? Entre em contato para verificar disponibilidade.
               </p>
             </div>
           </div>
@@ -150,7 +150,7 @@ const Sobre = () => {
               Vamos cuidar do seu pet juntos?
             </h2>
             <p className="text-lg text-accent-foreground/90 mb-8 max-w-xl mx-auto">
-              Crie sua conta gratuita e agende o primeiro servico. 
+              Crie sua conta gratuita e agende o primeiro serviço. 
               Seu pet merece o melhor cuidado!
             </p>
             <Button 
@@ -158,7 +158,7 @@ const Sobre = () => {
               className="bg-accent-foreground text-accent hover:bg-accent-foreground/90"
               asChild
             >
-              <Link to="/cadastro">Criar conta gratis</Link>
+              <Link to="/cadastro">Criar conta grátis</Link>
             </Button>
           </div>
         </section>
