@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import { Save, Mail, Phone, MapPin, User } from "lucide-react";
+import { Save, Mail, Phone, MapPin, User, CreditCard } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -26,6 +26,7 @@ const AdminConfiguracoes = () => {
     business_phone: "(48) 99663-9483",
     business_address: "Grande Florianópolis, SC",
     whatsapp_number: "5548996639483",
+    pix_key: "",
   });
 
   useEffect(() => {
@@ -53,7 +54,7 @@ const AdminConfiguracoes = () => {
       const { data: settingsData } = await supabase
         .from("settings")
         .select("*")
-        .in("key", ["business_name", "business_email", "business_phone", "business_address", "whatsapp_number"]);
+        .in("key", ["business_name", "business_email", "business_phone", "business_address", "whatsapp_number", "pix_key"]);
 
       if (settingsData) {
         const settingsMap: Record<string, string> = {};
@@ -245,6 +246,21 @@ const AdminConfiguracoes = () => {
                 onChange={(e) => setBusinessSettings({ ...businessSettings, business_address: e.target.value })}
                 className="mt-1"
               />
+            </div>
+            <div>
+              <Label>Chave PIX</Label>
+              <div className="relative">
+                <CreditCard className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                <Input
+                  value={businessSettings.pix_key}
+                  onChange={(e) => setBusinessSettings({ ...businessSettings, pix_key: e.target.value })}
+                  placeholder="CPF, telefone, e-mail ou chave aleatória"
+                  className="mt-1 pl-10"
+                />
+              </div>
+              <p className="text-xs text-muted-foreground mt-1">
+                Chave PIX para receber pagamentos dos clientes
+              </p>
             </div>
             <Button onClick={saveBusinessSettings} disabled={saving} className="w-full">
               <Save className="w-4 h-4 mr-2" />

@@ -51,7 +51,7 @@ const AdminDashboard = () => {
 
       const [pendingRes, confirmedRes, completedRes, reviewsRes, bookingsRes] = await Promise.all([
         supabase.from("bookings").select("id", { count: "exact" }).eq("status", "pending"),
-        supabase.from("bookings").select("id", { count: "exact" }).eq("status", "confirmed").eq("scheduled_date", today),
+        supabase.from("bookings").select("id", { count: "exact" }).in("status", ["confirmed", "in_progress"]).eq("scheduled_date", today),
         supabase.from("bookings").select("id", { count: "exact" }).eq("status", "completed").gte("scheduled_date", startOfMonth),
         supabase.from("reviews").select("id", { count: "exact" }).eq("status", "pending"),
         supabase.from("bookings")
