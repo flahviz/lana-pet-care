@@ -11,7 +11,8 @@ import {
   Edit2, 
   Trash2, 
   PawPrint,
-  ArrowLeft
+  ArrowLeft,
+  Calendar
 } from "lucide-react";
 
 interface Pet {
@@ -336,43 +337,53 @@ const MeusPets = () => {
                 Cadastrar primeiro pet
               </Button>
             </div>
-          ) : (
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {pets.map((pet) => (
-                <div key={pet.id} className="card-elevated p-6">
-                  <div className="flex items-start justify-between mb-4">
-                    <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center">
-                      <PawPrint className="w-7 h-7 text-primary" />
+          ) : !showForm && pets.length > 0 ? (
+            <>
+              <div className="flex justify-end mb-4">
+                <Button asChild>
+                  <Link to="/novo-pedido">
+                    <Calendar className="w-4 h-4 mr-2" />
+                    Agendar Serviço
+                  </Link>
+                </Button>
+              </div>
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                {pets.map((pet) => (
+                  <div key={pet.id} className="card-elevated p-6">
+                    <div className="flex items-start justify-between mb-4">
+                      <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center">
+                        <PawPrint className="w-7 h-7 text-primary" />
+                      </div>
+                      <div className="flex gap-1">
+                        <Button variant="ghost" size="icon" onClick={() => handleEdit(pet)}>
+                          <Edit2 className="w-4 h-4" />
+                        </Button>
+                        <Button variant="ghost" size="icon" onClick={() => handleDelete(pet.id)}>
+                          <Trash2 className="w-4 h-4 text-destructive" />
+                        </Button>
+                      </div>
                     </div>
-                    <div className="flex gap-1">
-                      <Button variant="ghost" size="icon" onClick={() => handleEdit(pet)}>
-                        <Edit2 className="w-4 h-4" />
-                      </Button>
-                      <Button variant="ghost" size="icon" onClick={() => handleDelete(pet.id)}>
-                        <Trash2 className="w-4 h-4 text-destructive" />
-                      </Button>
+                    <h3 className="text-lg font-semibold text-foreground mb-1">{pet.name}</h3>
+                    <p className="text-sm text-muted-foreground mb-3">
+                      {speciesLabels[pet.species]}
+                      {pet.breed && ` - ${pet.breed}`}
+                    </p>
+                    <div className="space-y-1 text-sm">
+                      {pet.age_years && (
+                        <p className="text-muted-foreground">{pet.age_years} anos</p>
+                      )}
+                      {pet.weight_kg && (
+                        <p className="text-muted-foreground">{pet.weight_kg} kg</p>
+                      )}
+                      {pet.temperament && (
+                        <p className="text-muted-foreground">{pet.temperament}</p>
+                      )}
                     </div>
                   </div>
-                  <h3 className="text-lg font-semibold text-foreground mb-1">{pet.name}</h3>
-                  <p className="text-sm text-muted-foreground mb-3">
-                    {speciesLabels[pet.species]}
-                    {pet.breed && ` - ${pet.breed}`}
-                  </p>
-                  <div className="space-y-1 text-sm">
-                    {pet.age_years && (
-                      <p className="text-muted-foreground">{pet.age_years} anos</p>
-                    )}
-                    {pet.weight_kg && (
-                      <p className="text-muted-foreground">{pet.weight_kg} kg</p>
-                    )}
-                    {pet.temperament && (
-                      <p className="text-muted-foreground">{pet.temperament}</p>
-                    )}
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
+                ))}
+              </div>
+            </>
+          ) : null}
         </div>
       </main>
 

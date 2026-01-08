@@ -5,6 +5,7 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
+import { Calendar as CalendarComponent } from "@/components/ui/calendar";
 import { toast } from "sonner";
 import { 
   ArrowLeft, 
@@ -269,12 +270,22 @@ const NovoPedido = () => {
     "13:00", "14:00", "15:00", "16:00", "17:00"
   ];
 
-  // Generate next 14 days
-  const availableDates = Array.from({ length: 14 }, (_, i) => {
-    const date = new Date();
-    date.setDate(date.getDate() + i + 1);
-    return date.toISOString().split("T")[0];
-  });
+  // Generate dates until end of 2026
+  const availableDates = (() => {
+    const dates = [];
+    const today = new Date();
+    const endOf2026 = new Date(2026, 11, 31); // December 31, 2026
+    
+    let currentDate = new Date(today);
+    currentDate.setDate(currentDate.getDate() + 1); // Start from tomorrow
+    
+    while (currentDate <= endOf2026) {
+      dates.push(currentDate.toISOString().split("T")[0]);
+      currentDate.setDate(currentDate.getDate() + 1);
+    }
+    
+    return dates;
+  })();
 
   const formatDate = (dateStr: string) => {
     const date = new Date(dateStr + "T12:00:00");
@@ -569,20 +580,25 @@ const NovoPedido = () => {
                   
                   <div>
                     <h3 className="font-medium text-foreground mb-3">Data</h3>
-                    <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
-                      {availableDates.map((date) => (
-                        <button
-                          key={date}
-                          onClick={() => setSelectedDate(date)}
-                          className={`p-3 rounded-lg border-2 text-center text-sm transition-all ${
-                            selectedDate === date 
-                              ? "border-primary bg-primary/5" 
-                              : "border-border hover:border-primary/50"
-                          }`}
-                        >
-                          {formatDate(date)}
-                        </button>
-                      ))}
+                    <div className="flex justify-center">
+                      <CalendarComponent
+                        mode="single"
+                        selected={selectedDate ? new Date(selectedDate + "T12:00:00") : undefined}
+                        onSelect={(date) => {
+                          if (date) {
+                            setSelectedDate(date.toISOString().split("T")[0]);
+                          }
+                        }}
+                        disabled={(date) => {
+                          const today = new Date();
+                          today.setHours(0, 0, 0, 0);
+                          const endOf2026 = new Date(2026, 11, 31);
+                          return date < today || date > endOf2026;
+                        }}
+                        fromDate={new Date()}
+                        toDate={new Date(2026, 11, 31)}
+                        className="rounded-md border"
+                      />
                     </div>
                   </div>
 
