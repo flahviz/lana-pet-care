@@ -67,7 +67,8 @@ const AdminPedidos = () => {
           total_price,
           notes,
           created_at,
-          profiles!bookings_user_id_fkey(full_name, phone),
+          user_id,
+          profiles!inner(full_name, phone),
           service_variants(name, services(name)),
           addresses(street, number, neighborhood)
         `)
