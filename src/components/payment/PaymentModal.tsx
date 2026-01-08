@@ -75,7 +75,7 @@ export const PaymentModal = ({ open, onClose, bookingId, totalPrice, pixKey }: P
           </div>
 
           {/* Chave PIX */}
-          {pixKey && (
+          {pixKey ? (
             <div>
               <p className="text-sm font-medium text-foreground mb-2">Chave PIX</p>
               <div className="flex gap-2">
@@ -96,6 +96,15 @@ export const PaymentModal = ({ open, onClose, bookingId, totalPrice, pixKey }: P
                   )}
                 </Button>
               </div>
+            </div>
+          ) : (
+            <div className="p-3 bg-yellow-50 dark:bg-yellow-950 rounded-lg">
+              <p className="text-sm text-yellow-900 dark:text-yellow-100">
+                <strong>⚠️ Chave PIX não configurada</strong>
+              </p>
+              <p className="text-xs text-yellow-800 dark:text-yellow-200 mt-1">
+                Entre em contato com o administrador para obter a chave PIX para pagamento.
+              </p>
             </div>
           )}
 
