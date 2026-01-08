@@ -30,13 +30,19 @@ const Perfil = () => {
   }, [user]);
 
   const fetchProfile = async () => {
+    if (!user?.id) {
+      setIsLoading(false);
+      return;
+    }
+
     const { data, error } = await supabase
       .from("profiles")
-      .select("*")
-      .eq("user_id", user?.id)
-      .single();
+      .select("full_name, phone")
+      .eq("user_id", user.id)
+      .maybeSingle();
 
     if (error) {
+      console.error("Error fetching profile:", error);
       toast.error("Erro ao carregar perfil");
     } else if (data) {
       setFormData({
