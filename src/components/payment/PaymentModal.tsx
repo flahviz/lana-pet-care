@@ -4,7 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { Copy, Check, Upload } from "lucide-react";
+import { Copy, Check, Upload, QrCode } from "lucide-react";
+import { QRCodeSVG } from "qrcode.react";
 
 interface PaymentModalProps {
   open: boolean;
@@ -18,6 +19,17 @@ export const PaymentModal = ({ open, onClose, bookingId, totalPrice, pixKey }: P
   const [proofUrl, setProofUrl] = useState("");
   const [uploading, setUploading] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [showQRCode, setShowQRCode] = useState(false);
+
+  // Gerar código PIX Copia e Cola (formato simplificado)
+  const generatePixCode = () => {
+    if (!pixKey) return "";
+    // Formato básico de PIX Copia e Cola
+    const amount = totalPrice.toFixed(2);
+    return `00020126${pixKey.length.toString().padStart(2, '0')}${pixKey}5204000053039865802BR5913Lana Pet Care6014Florianopolis62070503***6304${amount.replace('.', '')}`;
+  };
+
+  const pixCode = generatePixCode();
 
   const handleCopyPixKey = () => {
     navigator.clipboard.writeText(pixKey);
@@ -76,26 +88,57 @@ export const PaymentModal = ({ open, onClose, bookingId, totalPrice, pixKey }: P
 
           {/* Chave PIX */}
           {pixKey ? (
-            <div>
-              <p className="text-sm font-medium text-foreground mb-2">Chave PIX</p>
-              <div className="flex gap-2">
-                <Input
-                  value={pixKey}
-                  readOnly
-                  className="flex-1"
-                />
-                <Button
-                  variant="outline"
-                  size="icon"
-                  onClick={handleCopyPixKey}
-                >
-                  {copied ? (
-                    <Check className="w-4 h-4 text-success" />
-                  ) : (
-                    <Copy className="w-4 h-4" />
-                  )}
-                </Button>
-              </div>
+            <div className="space-y-3">
+              {/* QR Code */}
+              {showQRCode ? (
+                <div className="flex flex-col items-center p-4 bg-white rounded-lg">
+                  <QRCodeSVG value={pixKey} size={200} level="H" />
+                  <p className="text-xs text-muted-foreground mt-2 text-center">
+                    Escaneie o QR Code com o app do seu banco
+                  </p>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setShowQRCode(false)}
+                    className="mt-2"
+                  >
+                    Voltar para chave PIX
+                  </Button>
+                </div>
+              ) : (
+                <>
+                  <div className="flex items-center justify-between">
+                    <p className="text-sm font-medium text-foreground">Chave PIX</p>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => setShowQRCode(true)}
+                      className="text-xs"
+                    >
+                      <QrCode className="w-4 h-4 mr-1" />
+                      Ver QR Code
+                    </Button>
+                  </div>
+                  <div className="flex gap-2">
+                    <Input
+                      value={pixKey}
+                      readOnly
+                      className="flex-1"
+                    />
+                    <Button
+                      variant="outline"
+                      size="icon"
+                      onClick={handleCopyPixKey}
+                    >
+                      {copied ? (
+                        <Check className="w-4 h-4 text-success" />
+                      ) : (
+                        <Copy className="w-4 h-4" />
+                      )}
+                    </Button>
+                  </div>
+                </>
+              )}
             </div>
           ) : (
             <div className="p-3 bg-yellow-50 dark:bg-yellow-950 rounded-lg">

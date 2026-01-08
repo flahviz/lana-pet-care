@@ -69,7 +69,16 @@ const MeusPedidos = () => {
       .single();
     
     if (data?.value) {
-      setPixKey(String(data.value).replace(/"/g, ''));
+      // Remove aspas duplas e barras do JSON
+      let key = String(data.value);
+      try {
+        // Se for JSON válido, parse
+        key = JSON.parse(key);
+      } catch {
+        // Se não for JSON, apenas remove aspas
+        key = key.replace(/['"\\]/g, '');
+      }
+      setPixKey(key);
     }
   };
 
