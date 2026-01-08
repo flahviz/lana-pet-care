@@ -35,7 +35,7 @@ interface Booking {
   total_price: number;
   notes: string | null;
   created_at: string;
-  profiles: { full_name: string; phone: string | null } | null;
+  user_id: string;
   service_variants: { name: string; services: { name: string } | null } | null;
   addresses: { street: string; number: string; neighborhood: string } | null;
 }
@@ -68,7 +68,6 @@ const AdminPedidos = () => {
           notes,
           created_at,
           user_id,
-          profiles!inner(full_name, phone),
           service_variants(name, services(name)),
           addresses(street, number, neighborhood)
         `)
@@ -135,9 +134,9 @@ const AdminPedidos = () => {
   };
 
   const filteredBookings = bookings.filter((booking) => {
-    const clientName = booking.profiles?.full_name?.toLowerCase() || "";
     const serviceName = booking.service_variants?.services?.name?.toLowerCase() || "";
-    return clientName.includes(searchTerm.toLowerCase()) || serviceName.includes(searchTerm.toLowerCase());
+    const bookingId = booking.id.toLowerCase();
+    return serviceName.includes(searchTerm.toLowerCase()) || bookingId.includes(searchTerm.toLowerCase());
   });
 
   return (
@@ -210,7 +209,7 @@ const AdminPedidos = () => {
                     <div className="flex-1">
                       <div className="flex items-center gap-3 mb-2">
                         <p className="font-semibold text-foreground">
-                          {booking.profiles?.full_name || "Cliente"}
+                          Pedido #{booking.id.slice(0, 8)}
                         </p>
                         <span className={`px-2 py-0.5 text-xs font-medium rounded-full ${statusConfig[booking.status]?.className}`}>
                           {statusConfig[booking.status]?.label}
