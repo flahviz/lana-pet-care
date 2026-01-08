@@ -15,6 +15,8 @@ import MeusPets from "./pages/MeusPets";
 import Agenda from "./pages/Agenda";
 import NovoPedido from "./pages/NovoPedido";
 import MeusPedidos from "./pages/MeusPedidos";
+import RecuperarSenha from "./pages/RecuperarSenha";
+import RedefinirSenha from "./pages/RedefinirSenha";
 import NotFound from "./pages/NotFound";
 
 // Admin pages
@@ -42,6 +44,8 @@ const App = () => (
             <Route path="/cadastro" element={<Cadastro />} />
             <Route path="/sobre" element={<Sobre />} />
             <Route path="/ajuda" element={<Ajuda />} />
+            <Route path="/recuperar-senha" element={<RecuperarSenha />} />
+            <Route path="/redefinir-senha" element={<RedefinirSenha />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/meus-pets" element={<MeusPets />} />
             <Route path="/agenda" element={<Agenda />} />

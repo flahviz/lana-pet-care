@@ -19,19 +19,19 @@ const Footer = () => {
             </div>
             <p className="text-background/70 text-sm leading-relaxed">
               Cuidado profissional e carinhoso para seu melhor amigo. 
-              Passeios e visitas com toda a atencao que seu pet merece.
+              Passeios e visitas com toda a atenção que seu pet merece.
             </p>
           </div>
 
           {/* Links */}
           <div className="space-y-4">
-            <h4 className="font-semibold text-base">Navegacao</h4>
+            <h4 className="font-semibold text-base">Navegação</h4>
             <nav className="flex flex-col gap-2">
               <Link to="/" className="text-sm text-background/70 hover:text-background transition-colors">
-                Inicio
+                Início
               </Link>
               <Link to="/avaliacoes" className="text-sm text-background/70 hover:text-background transition-colors">
-                Avaliacoes
+                Avaliações
               </Link>
               <Link to="/sobre" className="text-sm text-background/70 hover:text-background transition-colors">
                 Sobre
@@ -44,7 +44,7 @@ const Footer = () => {
 
           {/* Services */}
           <div className="space-y-4">
-            <h4 className="font-semibold text-base">Servicos</h4>
+            <h4 className="font-semibold text-base">Serviços</h4>
             <nav className="flex flex-col gap-2">
               <span className="text-sm text-background/70">Dog Walker</span>
               <span className="text-sm text-background/70">Pet Sitter</span>
@@ -73,7 +73,7 @@ const Footer = () => {
               )}
               <span className="flex items-center gap-2 text-sm text-background/70">
                 <MapPin className="w-4 h-4" />
-                Grande Florianopolis, SC
+                Grande Florianópolis, SC
               </span>
             </div>
           </div>
@@ -86,7 +86,7 @@ const Footer = () => {
             </p>
             <div className="flex gap-6">
               <Link to="/politicas" className="text-sm text-background/60 hover:text-background transition-colors">
-                Politicas
+                Políticas
               </Link>
               <Link to="/termos" className="text-sm text-background/60 hover:text-background transition-colors">
                 Termos de uso
