@@ -59,7 +59,14 @@ const AdminConfiguracoes = () => {
       if (settingsData) {
         const settingsMap: Record<string, string> = {};
         settingsData.forEach((s) => {
-          settingsMap[s.key] = String(s.value).replace(/"/g, "");
+          try {
+            // Tentar fazer parse do JSON
+            const parsed = JSON.parse(String(s.value));
+            settingsMap[s.key] = String(parsed);
+          } catch {
+            // Se falhar, usar o valor direto removendo aspas
+            settingsMap[s.key] = String(s.value).replace(/['"\\]/g, "");
+          }
         });
         setBusinessSettings((prev) => ({
           ...prev,
