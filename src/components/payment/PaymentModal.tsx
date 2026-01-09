@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -6,6 +6,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { Copy, Check, Upload, QrCode } from "lucide-react";
 import { QRCodeSVG } from "qrcode.react";
+import Pix from "pix-utils";
 
 interface PaymentModalProps {
   open: boolean;
@@ -19,23 +20,44 @@ export const PaymentModal = ({ open, onClose, bookingId, totalPrice, pixKey }: P
   const [proofUrl, setProofUrl] = useState("");
   const [uploading, setUploading] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [copiedCode, setCopiedCode] = useState(false);
   const [showQRCode, setShowQRCode] = useState(false);
 
-  // Gerar código PIX Copia e Cola (formato simplificado)
-  const generatePixCode = () => {
+  // Gerar código PIX Copia e Cola usando biblioteca pix-utils
+  const pixCode = useMemo(() => {
     if (!pixKey) return "";
-    // Formato básico de PIX Copia e Cola
-    const amount = totalPrice.toFixed(2);
-    return `00020126${pixKey.length.toString().padStart(2, '0')}${pixKey}5204000053039865802BR5913Lana Pet Care6014Florianopolis62070503***6304${amount.replace('.', '')}`;
-  };
-
-  const pixCode = generatePixCode();
+    
+    try {
+      const pix = new Pix(
+        pixKey,
+        "Lana Pet Care",
+        "Florianopolis",
+        totalPrice.toFixed(2),
+        `Pedido ${bookingId.slice(0, 8)}`
+      );
+      return pix.getPayload();
+    } catch (error) {
+      console.error("Error generating PIX code:", error);
+      return "";
+    }
+  }, [pixKey, totalPrice, bookingId]);
 
   const handleCopyPixKey = () => {
     navigator.clipboard.writeText(pixKey);
     setCopied(true);
     toast.success("Chave PIX copiada!");
     setTimeout(() => setCopied(false), 2000);
+  };
+
+  const handleCopyPixCode = () => {
+    if (!pixCode) {
+      toast.error("Código PIX não disponível");
+      return;
+    }
+    navigator.clipboard.writeText(pixCode);
+    setCopiedCode(true);
+    toast.success("Código PIX Copia e Cola copiado!");
+    setTimeout(() => setCopiedCode(false), 2000);
   };
 
   const handleSubmitProof = async () => {
@@ -92,7 +114,7 @@ export const PaymentModal = ({ open, onClose, bookingId, totalPrice, pixKey }: P
               {/* QR Code */}
               {showQRCode ? (
                 <div className="flex flex-col items-center p-4 bg-white rounded-lg">
-                  <QRCodeSVG value={pixKey} size={200} level="H" />
+                  <QRCodeSVG value={pixCode || pixKey} size={200} level="H" />
                   <p className="text-xs text-muted-foreground mt-2 text-center">
                     Escaneie o QR Code com o app do seu banco
                   </p>
@@ -102,13 +124,13 @@ export const PaymentModal = ({ open, onClose, bookingId, totalPrice, pixKey }: P
                     onClick={() => setShowQRCode(false)}
                     className="mt-2"
                   >
-                    Voltar para chave PIX
+                    Voltar
                   </Button>
                 </div>
               ) : (
                 <>
                   <div className="flex items-center justify-between">
-                    <p className="text-sm font-medium text-foreground">Chave PIX</p>
+                    <p className="text-sm font-medium text-foreground">Chave PIX (CPF)</p>
                     <Button
                       variant="ghost"
                       size="sm"
@@ -137,6 +159,34 @@ export const PaymentModal = ({ open, onClose, bookingId, totalPrice, pixKey }: P
                       )}
                     </Button>
                   </div>
+
+                  {/* PIX Copia e Cola */}
+                  {pixCode && (
+                    <div>
+                      <p className="text-sm font-medium text-foreground mb-2">PIX Copia e Cola</p>
+                      <div className="flex gap-2">
+                        <Input
+                          value={pixCode}
+                          readOnly
+                          className="flex-1 text-xs"
+                        />
+                        <Button
+                          variant="outline"
+                          size="icon"
+                          onClick={handleCopyPixCode}
+                        >
+                          {copiedCode ? (
+                            <Check className="w-4 h-4 text-success" />
+                          ) : (
+                            <Copy className="w-4 h-4" />
+                          )}
+                        </Button>
+                      </div>
+                      <p className="text-xs text-muted-foreground mt-1">
+                        Cole este código no seu app de pagamento
+                      </p>
+                    </div>
+                  )}
                 </>
               )}
             </div>
