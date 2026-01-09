@@ -62,32 +62,37 @@ const MeusPedidos = () => {
   }, [user]);
 
   const fetchPixKey = async () => {
-    const { data, error } = await supabase
-      .from("settings")
-      .select("value")
-      .eq("key", "pix_key")
-      .single();
-    
-    if (error) {
-      console.error("Error fetching PIX key:", error);
-      return;
-    }
-    
-    if (data?.value) {
-      let key = "";
-      try {
-        // Tentar fazer parse do JSON
-        const parsed = JSON.parse(String(data.value));
-        key = String(parsed);
-      } catch {
-        // Se falhar, usar o valor direto removendo aspas e barras
-        key = String(data.value).replace(/['"\\]/g, '');
+    try {
+      // Usar rpc ou query direta para acessar public_settings
+      const { data, error } = await supabase
+        .from("public_settings" as any)
+        .select("value")
+        .eq("key", "pix_key")
+        .single();
+      
+      if (error) {
+        console.error("Error fetching PIX key:", error);
+        return;
       }
       
-      console.log("PIX Key loaded:", key);
-      setPixKey(key);
-    } else {
-      console.log("No PIX key found in database");
+      if (data?.value) {
+        let key = "";
+        try {
+          // Tentar fazer parse do JSON
+          const parsed = JSON.parse(String(data.value));
+          key = String(parsed);
+        } catch {
+          // Se falhar, usar o valor direto removendo aspas e barras
+          key = String(data.value).replace(/['"\\]/g, '');
+        }
+        
+        console.log("PIX Key loaded:", key);
+        setPixKey(key);
+      } else {
+        console.log("No PIX key found in database");
+      }
+    } catch (err) {
+      console.error("Exception fetching PIX key:", err);
     }
   };
 
