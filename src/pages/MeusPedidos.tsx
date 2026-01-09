@@ -62,23 +62,32 @@ const MeusPedidos = () => {
   }, [user]);
 
   const fetchPixKey = async () => {
-    const { data } = await supabase
+    const { data, error } = await supabase
       .from("settings")
       .select("value")
       .eq("key", "pix_key")
       .single();
     
+    if (error) {
+      console.error("Error fetching PIX key:", error);
+      return;
+    }
+    
     if (data?.value) {
-      // Remove aspas duplas e barras do JSON
-      let key = String(data.value);
+      let key = "";
       try {
-        // Se for JSON válido, parse
-        key = JSON.parse(key);
+        // Tentar fazer parse do JSON
+        const parsed = JSON.parse(String(data.value));
+        key = String(parsed);
       } catch {
-        // Se não for JSON, apenas remove aspas
-        key = key.replace(/['"\\]/g, '');
+        // Se falhar, usar o valor direto removendo aspas e barras
+        key = String(data.value).replace(/['"\\]/g, '');
       }
+      
+      console.log("PIX Key loaded:", key);
       setPixKey(key);
+    } else {
+      console.log("No PIX key found in database");
     }
   };
 

@@ -48,10 +48,12 @@ const AdminDashboard = () => {
     try {
       const today = new Date().toISOString().split('T')[0];
       const startOfMonth = new Date(new Date().getFullYear(), new Date().getMonth(), 1).toISOString().split('T')[0];
+      const todayStart = `${today}T00:00:00`;
+      const todayEnd = `${today}T23:59:59`;
 
       const [pendingRes, confirmedRes, completedRes, reviewsRes, bookingsRes] = await Promise.all([
         supabase.from("bookings").select("id", { count: "exact" }).eq("status", "pending"),
-        supabase.from("bookings").select("id", { count: "exact" }).in("status", ["confirmed", "in_progress"]).eq("scheduled_date", today),
+        supabase.from("bookings").select("id", { count: "exact" }).in("status", ["confirmed", "in_progress"]).gte("updated_at", todayStart).lte("updated_at", todayEnd),
         supabase.from("bookings").select("id", { count: "exact" }).eq("status", "completed").gte("scheduled_date", startOfMonth),
         supabase.from("reviews").select("id", { count: "exact" }).eq("status", "pending"),
         supabase.from("bookings")
