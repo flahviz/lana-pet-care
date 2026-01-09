@@ -5,6 +5,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
+import { ProtectedAdminRoute } from "@/components/ProtectedAdminRoute";
 
 const Index = lazy(() => import("./pages/Index"));
 const Avaliacoes = lazy(() => import("./pages/Avaliacoes"));
@@ -67,14 +68,16 @@ const App = () => (
               <Route path="/perfil" element={<Perfil />} />
               <Route path="/minhas-avaliacoes" element={<MinhasAvaliacoes />} />
 
-              {/* Admin Routes */}
-              <Route path="/admin" element={<AdminLayout />}>
-                <Route index element={<AdminDashboard />} />
-                <Route path="pedidos" element={<AdminPedidos />} />
-                <Route path="agenda" element={<AdminAgenda />} />
-                <Route path="precos" element={<AdminPrecos />} />
-                <Route path="avaliacoes" element={<AdminAvaliacoes />} />
-                <Route path="configuracoes" element={<AdminConfiguracoes />} />
+              {/* Admin Routes - PROTEGIDAS */}
+              <Route element={<ProtectedAdminRoute />}>
+                <Route path="/admin" element={<AdminLayout />}>
+                  <Route index element={<AdminDashboard />} />
+                  <Route path="pedidos" element={<AdminPedidos />} />
+                  <Route path="agenda" element={<AdminAgenda />} />
+                  <Route path="precos" element={<AdminPrecos />} />
+                  <Route path="avaliacoes" element={<AdminAvaliacoes />} />
+                  <Route path="configuracoes" element={<AdminConfiguracoes />} />
+                </Route>
               </Route>
 
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
