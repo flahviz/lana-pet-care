@@ -28,16 +28,23 @@ export const PaymentModal = ({ open, onClose, bookingId, totalPrice, pixKey }: P
     if (!pixKey) return "";
     
     try {
+      // Formatar valor com exatamente 2 casas decimais
+      const formattedAmount = Number(totalPrice).toFixed(2);
+      
+      // TransactionId: máximo 25 caracteres, apenas alfanuméricos
+      const txId = bookingId.replace(/[^a-zA-Z0-9]/g, '').slice(0, 25);
+      
       const payload = generatePixPayload({
         key: pixKey,
         name: "Lana Pet Care",
         city: "Florianopolis",
-        message: `Pedido #${bookingId.slice(0, 8)}`,
-        amount: totalPrice,
-        transactionId: bookingId.slice(0, 25)
+        message: `Pedido ${bookingId.slice(0, 8)}`, // Sem caractere especial #
+        amount: parseFloat(formattedAmount),
+        transactionId: txId
       });
       
       console.log("PIX Code generated:", payload);
+      console.log("Amount:", formattedAmount, "TxId:", txId);
       return payload;
     } catch (error) {
       console.error("Error generating PIX code:", error);
