@@ -6,7 +6,6 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { Copy, Check, Upload, QrCode } from "lucide-react";
 import { QRCodeSVG } from "qrcode.react";
-import Pix from "pix-utils";
 
 interface PaymentModalProps {
   open: boolean;
@@ -23,19 +22,55 @@ export const PaymentModal = ({ open, onClose, bookingId, totalPrice, pixKey }: P
   const [copiedCode, setCopiedCode] = useState(false);
   const [showQRCode, setShowQRCode] = useState(false);
 
-  // Gerar código PIX Copia e Cola usando biblioteca pix-utils
+  // Gerar código PIX Copia e Cola no formato EMV (padrão Banco Central)
   const pixCode = useMemo(() => {
     if (!pixKey) return "";
     
     try {
-      const pix = new Pix(
-        pixKey,
-        "Lana Pet Care",
-        "Florianopolis",
-        totalPrice.toFixed(2),
-        `Pedido ${bookingId.slice(0, 8)}`
+      // Função auxiliar para formatar campos EMV
+      const formatEMV = (id: string, value: string) => {
+        const length = value.length.toString().padStart(2, '0');
+        return `${id}${length}${value}`;
+      };
+
+      // Função para calcular CRC16 CCITT
+      const crc16 = (str: string) => {
+        let crc = 0xFFFF;
+        for (let i = 0; i < str.length; i++) {
+          crc ^= str.charCodeAt(i) << 8;
+          for (let j = 0; j < 8; j++) {
+            crc = (crc & 0x8000) ? (crc << 1) ^ 0x1021 : crc << 1;
+          }
+        }
+        return (crc & 0xFFFF).toString(16).toUpperCase().padStart(4, '0');
+      };
+
+      // Construir payload PIX EMV
+      const payloadFormat = formatEMV('00', '01'); // Payload Format Indicator
+      const merchantAccount = formatEMV('26', 
+        formatEMV('00', 'BR.GOV.BCB.PIX') + 
+        formatEMV('01', pixKey)
       );
-      return pix.getPayload();
+      const merchantCategory = formatEMV('52', '0000'); // Merchant Category Code
+      const currency = formatEMV('53', '986'); // BRL
+      const amount = formatEMV('54', totalPrice.toFixed(2));
+      const country = formatEMV('58', 'BR');
+      const merchantName = formatEMV('59', 'Lana Pet Care');
+      const merchantCity = formatEMV('60', 'Florianopolis');
+      const txid = formatEMV('05', bookingId.slice(0, 25));
+      const additionalData = formatEMV('62', txid);
+
+      // Montar payload sem CRC
+      const payloadWithoutCRC = payloadFormat + merchantAccount + merchantCategory + 
+                                currency + amount + country + merchantName + 
+                                merchantCity + additionalData + '6304';
+
+      // Calcular e adicionar CRC
+      const checksum = crc16(payloadWithoutCRC);
+      const payload = payloadWithoutCRC + checksum;
+
+      console.log("PIX Code generated:", payload);
+      return payload;
     } catch (error) {
       console.error("Error generating PIX code:", error);
       return "";
