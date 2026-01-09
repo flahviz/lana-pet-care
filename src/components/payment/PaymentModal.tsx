@@ -6,7 +6,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { Copy, Check, Upload, QrCode } from "lucide-react";
 import { QRCodeSVG } from "qrcode.react";
-import PixPayload from "pix-payload";
+import { payload as generatePixPayload } from "pix-payload";
 
 interface PaymentModalProps {
   open: boolean;
@@ -28,16 +28,15 @@ export const PaymentModal = ({ open, onClose, bookingId, totalPrice, pixKey }: P
     if (!pixKey) return "";
     
     try {
-      const pixPayload = new PixPayload();
+      const payload = generatePixPayload({
+        key: pixKey,
+        name: "Lana Pet Care",
+        city: "Florianopolis",
+        message: `Pedido #${bookingId.slice(0, 8)}`,
+        amount: totalPrice,
+        transactionId: bookingId.slice(0, 25)
+      });
       
-      pixPayload.setPixKey(pixKey);
-      pixPayload.setDescription(`Pedido #${bookingId.slice(0, 8)}`);
-      pixPayload.setMerchantName("Lana Pet Care");
-      pixPayload.setMerchantCity("Florianopolis");
-      pixPayload.setAmount(totalPrice.toFixed(2));
-      pixPayload.setTxid(bookingId.slice(0, 25));
-      
-      const payload = pixPayload.getPayload();
       console.log("PIX Code generated:", payload);
       return payload;
     } catch (error) {
